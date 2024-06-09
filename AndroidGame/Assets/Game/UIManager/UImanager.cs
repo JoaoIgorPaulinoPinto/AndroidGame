@@ -1,58 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+
 using TMPro;
 using UnityEngine;
 
 public class UImanager : MonoBehaviour
 {
-    
+    BallsLaucher ballsLaucher;
+    bool isRestart; 
 
-    [SerializeField] string mainMenuSceaneName;
-    [SerializeField] string gameSceaneName;
+    [Header("Tela Do Jogo")]
+    [Space]
 
-    [SerializeField] PlayerStts playerStts;
 
+    public GameObject gameHUD;
     [SerializeField] TextMeshProUGUI HUD_txtLifes;
     [SerializeField] TextMeshProUGUI HUD_txtScore;
     [SerializeField] TextMeshProUGUI HUD_txtBestScore;
+    [SerializeField] PlayerStts playerStts;
+    [Space]
 
+
+    [Header("Tela De Morte")]
+    [Space]
+    public GameObject dethSreen;
     [SerializeField] TextMeshProUGUI DS_txtScore;
     [SerializeField] TextMeshProUGUI DS_txtBestScore;
+    [Space]
 
-    [SerializeField] TextMeshProUGUI MS_txtScore;
 
-    public GameObject gameHUD;
+    [Header("Tela Do Menu")]
+    [SerializeField] GameObject mainMenu;
+    [Space]
+
+
     public GameObject menuScreen;
-    public GameObject dethSreen;
-    public GameObject configScreen;
+    [SerializeField] TextMeshProUGUI MS_txtScore;
+    [Space]
 
+
+    [Header("Tela De Configuracao")]
+    [Space] 
+    public GameObject configScreen;
+    [Space]
+
+    [Header("Funcoes")]
+    
+    [SerializeField] string gameSceaneName;
     public static UImanager Instance;
+
+    [Header("Controle de animações")]
+    [SerializeField]Animator GUIanimator;
 
     public void DathScreen()
     {
        
         ShowScreen(dethSreen);
         CloseScreen(gameHUD);
+        DS_txtBestScore.text = playerStts.bestScore.ToString();
+        DS_txtScore.text = playerStts.score.ToString();
 
-        
-
+        print(DS_txtBestScore);
+        print(DS_txtScore);
     }
-
+    private void Start()
+    {
+        if (isRestart) { mainMenu.SetActive(false); }
+    }
 
     private void Update()
     {
-
+     
         if (GameManager.Instance.playerIsDead)
         {
             DathScreen();
+            
+            GUIanimator.SetTrigger("deth_screen");
         }
-        HUD_txtBestScore.text = playerStts.Bestscore.ToString();
+        HUD_txtBestScore.text = playerStts.bestScore.ToString();
         HUD_txtLifes.text = playerStts.lifes.ToString();
         HUD_txtScore.text = playerStts.score.ToString();
 
-        DS_txtBestScore.text = playerStts.Bestscore.ToString();
-        DS_txtScore.text = playerStts.score.ToString();
+   
 
         MS_txtScore.text = playerStts.score.ToString();
     }
@@ -69,50 +96,75 @@ public class UImanager : MonoBehaviour
     //abre o menu com as opcoes do jogador, config, sair, etc 
     public void btnOpenMenu()
     {
+        GUIanimator.SetTrigger("menu_screen");
         ShowScreen(menuScreen);
+      
         Time.timeScale = 0;
+       
+
     }
     //fecha o menu do jogo 
     public void btnCloseMenu()
     {
-        CloseScreen(menuScreen);
+        CloseScreen(menuScreen); 
+    }
+
+    public void BtnStartGame()
+    {
+
+
+        GameManager.Instance.StartGame();
+        CloseScreen(mainMenu);
+        
     }
     //Recomeca o jogo 
 
     public void BtnRestartGame()
     {
-        GameManager.Instance.RestartGame(gameSceaneName);
+        isRestart = true;
+      
         gameHUD.SetActive(true);
-        Time.timeScale = 1;
         GameManager.Instance.playerIsDead = true;
+        GameManager.Instance.RestartGame("SampleScene");
+        Time.timeScale = 1;
+        CloseScreen(mainMenu);
+        
     }
     //volta a jogar de onde parou 
    
     public void BtnResume()
     {
         CloseScreen(menuScreen);
+        
         Time.timeScale = 1;
     }
     //volta para o menu principal
 
     public void BtnBackToMainMenu()
     {
-        GameManager.Instance.LoadSceane(mainMenuSceaneName);
+        ShowScreen(mainMenu);
+        isRestart = false;
+       // CloseScreen(menuScreen);
     }
     //abre a tela de configuracao do jogo 
     public void BtnOpenConfigScreen()
     {
         ShowScreen(configScreen);
         CloseScreen(menuScreen);
+        CloseScreen(mainMenu);  
+
+        GUIanimator.SetTrigger("config_screen");
+
     }
     //fecha a tela de configuracao 
     public void BtnCloseConfigScreen()
     {
         ShowScreen(menuScreen);
         CloseScreen(configScreen);
+        GUIanimator.SetTrigger("menu_screen");
 
     }
 
 
-    
+
 }

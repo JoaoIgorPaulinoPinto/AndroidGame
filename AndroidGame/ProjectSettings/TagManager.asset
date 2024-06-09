@@ -8,6 +8,7 @@ TagManager:
   - Green Ball
   - Red Ball
   - Yallow Ball
+  - AudioSource
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Post Processing
   - 
   - 
   - 

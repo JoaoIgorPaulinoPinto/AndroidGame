@@ -5,9 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public string gameSceaneName;
-    public void BtnStartGame()
+    [Header("Tela De Configuracao")]
+    [Space]
+    public GameObject configScreen;
+    public GameObject inicialScreen;
+    [Space]
+
+    [Header("Controle de animações")]
+    [SerializeField] Animator GUIanimator;
+
+    public string gameSceneName;
+
+
+  
+
+    public void ShowScreen(GameObject screen)
     {
-        SceneManager.LoadScene(gameSceaneName);
+        screen.SetActive(true);
+    }
+
+    public void CloseScreen(GameObject screenToClose)
+    {
+        screenToClose.SetActive(false);
+    }
+
+    public void BtnOpenConfigScreen()
+    {
+        CloseScreen(inicialScreen);
+
+        ShowScreen(configScreen);
+        GUIanimator.ResetTrigger("config_screen");
+        GUIanimator.Play("open");
+
+    }
+
+
+    //fecha a tela de configuracao  
+    public void BtnCloseConfigScreen()
+    {
+        ShowScreen(inicialScreen);
+        CloseScreen(configScreen);
     }
 }

@@ -6,27 +6,33 @@ public class PlayerStts : MonoBehaviour
 { 
     public int lifes;
     public int score;
-    public int Bestscore;
+    public int bestScore;
     public int level;
     public int coins;
 
     private void Update()
     {
-        Bestscore = PlayerPrefs.GetInt("Best Score");
-        if (score >= Bestscore)
+        bestScore = PlayerPrefs.GetInt("Best Score");
+        if (score >= bestScore)
         {
-            Bestscore = 0 + score;
+            bestScore = 0 + score;
         }
         PlayerPrefs.SetInt("Score", score);
-        PlayerPrefs.SetInt("Best Score", Bestscore);
+        PlayerPrefs.SetInt("Best Score", bestScore);
         PlayerPrefs.Save();
 
         if(lifes <= 0) {
 
-            Destroy(gameObject);
+           // Destroy(gameObject);
           
             GameManager.Instance.playerIsDead = true;
 
         }
+
+       
     }
+
+
+
+
 }

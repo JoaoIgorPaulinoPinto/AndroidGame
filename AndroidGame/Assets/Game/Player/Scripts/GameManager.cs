@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool playerIsDead = false;
-    int playerScore;
-    int playerBestScore;
+ 
     [SerializeField] PlayerStts playerStts;
 
     public static GameManager Instance;
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Mais de uma instância de UIManager encontrada na cena.");
             Destroy(gameObject);
         }
-       
+       //playerIsDead= true;
     }
 
     public void LoadSceane(string sceaneName)
@@ -41,6 +39,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         playerIsDead = true;
-        
+    }
+    public void StartGame()
+    {
+        playerIsDead = false;
+
     }
 }
