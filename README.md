@@ -15,7 +15,7 @@ Este é um jogo simples desenvolvido para dispositivos móveis. Ele foi criado c
 Para instalar e rodar o jogo em um dispositivo Android, siga as instruções abaixo:
 
 1. Faça o download do APK:
-   [Baixar APK](#)
+   
 
 2. Permita a instalação de aplicativos de fontes desconhecidas no seu dispositivo:
    - Vá para "Configurações" > "Segurança" > "Fontes desconhecidas" e ative a opção.
